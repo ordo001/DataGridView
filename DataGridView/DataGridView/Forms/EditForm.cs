@@ -20,12 +20,10 @@ namespace DataGridViewProject.Forms
     /// </summary>
     public partial class EditForm : Form
     {
-        private readonly BindingSource bindingSource = new();
-
         /// <summary>
         /// Текущий студент
         /// </summary>
-        public Student Student => (Student)bindingSource.Current;
+        public Student Student;
 
         /// <summary>
         /// Инициализировать новый экземпляр <see cref="EditForm"/>
@@ -33,13 +31,18 @@ namespace DataGridViewProject.Forms
         public EditForm(Student student)
         {
             InitializeComponent();
-            bindingSource.DataSource = student;
+            Student = student;
             InitBindings();
         }
 
         private void InitBindings()
         {
-            textBoxFullName.AddBinding<TextBox, Student>(c => c.Text, bindingSource, s => s.FullName, errorProvider);
+            comboBoxFormEducation.DataSource = Enum.GetValues(typeof(FormEducation))
+                    .Cast<FormEducation>()
+                    .Select(g => new { Value = g, Name = g.GetDisplayName() })
+                    .ToArray();
+            comboBoxFormEducation.DisplayMember = "Name";
+            comboBoxFormEducation.ValueMember = "Value";
 
             comboBoxGender.DataSource = Enum.GetValues(typeof(Gender))
                     .Cast<Gender>()
@@ -47,32 +50,22 @@ namespace DataGridViewProject.Forms
                     .ToArray();
             comboBoxGender.DisplayMember = "Name";
             comboBoxGender.ValueMember = "Value";
-            comboBoxGender.DataBindings.Add("SelectedValue", bindingSource, nameof(Student.Gender), true, DataSourceUpdateMode.OnPropertyChanged);
 
-            maskedTextBoxDate.AddBinding<MaskedTextBox, Student>(c => c.Text, bindingSource, s => s.BirthDate, errorProvider);
-
-            comboBoxFormEducation.DataSource = Enum.GetValues(typeof(FormEducation))
-                    .Cast<FormEducation>()
-                    .Select(g => new { Value = g, Name = g.GetDisplayName() })
-                    .ToArray();
-            comboBoxFormEducation.DisplayMember = "Name";
-            comboBoxFormEducation.ValueMember = "Value";
-            comboBoxFormEducation.DataBindings.Add("SelectedValue", bindingSource, nameof(Student.FormEducation), true, DataSourceUpdateMode.OnPropertyChanged);
-
-
-            numericUpDownMath.AddBinding<NumericUpDown, Student>(c => c.Value, bindingSource, s => s.MathScore, errorProvider);
-            numericUpDownRussian.AddBinding<NumericUpDown, Student>(c => c.Value, bindingSource, s => s.RussianScore, errorProvider);
-            numericUpDownInformatics.AddBinding<NumericUpDown, Student>(c => c.Value, bindingSource, s => s.InformaticsScore, errorProvider);
+            textBoxFullName.AddBinding(x => x.Text, Student, x => x.FullName, errorProvider);
+            comboBoxGender.AddBinding(x => x.Text, Student, x => x.Gender, errorProvider);
+            comboBoxFormEducation.AddBinding(x => x.Text, Student, x => x.FormEducation, errorProvider);
+            maskedTextBoxDate.AddBinding(x => x.Text, Student, x => x.BirthDate, errorProvider);
+            numericUpDownMath.AddBinding(x => x.Value, Student, x => x.MathScore, errorProvider);
+            numericUpDownRussian.AddBinding(x => x.Value, Student, x => x.RussianScore, errorProvider);
+            numericUpDownInformatics.AddBinding(x => x.Value, Student, x => x.InformaticsScore, errorProvider);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             errorProvider.Clear();
+            Student.BirthDate = Student.BirthDate.Date;
 
-            var student = (Student)bindingSource.Current;
-            student.BirthDate = student.BirthDate.Date;
-
-            var context = new ValidationContext(student);
+            var context = new ValidationContext(Student);
             var results = new List<ValidationResult>();
 
             var valid = Validator.TryValidateObject(Student, context, results, true);

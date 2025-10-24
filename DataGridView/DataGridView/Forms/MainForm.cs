@@ -21,7 +21,6 @@ namespace DataGridViewProject
         {
             InitializeComponent();
             dataGridView.AutoGenerateColumns = false;
-
             bindingSource.DataSource = typeof(Student);
             bindingSource.DataSource = studentService.GetAll();
             dataGridView.DataSource = bindingSource;
@@ -41,10 +40,6 @@ namespace DataGridViewProject
             ScoresRussian.DataPropertyName = nameof(Student.RussianScore);
             ScoreInform.DataPropertyName = nameof(Student.InformaticsScore);
             TotalScores.DataPropertyName = nameof(Student.TotalScore);
-
-            
-            if (dataGridView.Columns.Contains("Id"))
-                dataGridView.Columns["Id"].Visible = false;
         }
 
 
@@ -67,7 +62,11 @@ namespace DataGridViewProject
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            if (bindingSource.Current is not Student selected) return;
+            if (bindingSource.Current is not Student selected)
+            {
+                return;
+            }
+
             var clone = new Student
             {
                 Id = selected.Id,
@@ -91,21 +90,18 @@ namespace DataGridViewProject
 
         private void dataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (dataGridView.Columns[e.ColumnIndex].DataPropertyName == nameof(Student.Gender))
+            if (e.Value is Enum enumVal)
             {
-                if (e.Value is Gender gender)
-                    e.Value = gender.GetDisplayName();
-            }
-            else if (dataGridView.Columns[e.ColumnIndex].DataPropertyName == nameof(Student.FormEducation))
-            {
-                if (e.Value is FormEducation form)
-                    e.Value = form.GetDisplayName();
+                e.Value = enumVal.GetDisplayName();
             }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (bindingSource.Current is not Student selected) return;
+            if (bindingSource.Current is not Student selected)
+            {
+                return;
+            }
             if (MessageBox.Show("Удалить запись?", "Подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 studentService.Delete(selected.Id);

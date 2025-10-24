@@ -11,24 +11,24 @@ namespace DataGridViewProject.Models.Enums
         /// Неизвестный
         /// </summary>
         [Display(Name = "Неизвестный")]
-        Unknown = 0,
+        Unknown,
 
         /// <summary>
         /// Мужской
         /// </summary>
         [Display(Name = "Мужской")]
-        Male = 1,
+        Male,
 
         /// <summary>
         /// Женский
         /// </summary>
         [Display(Name = "Женский")]
-        Female = 2,
+        Female,
 
         /// <summary>
         /// Боевой вертолёт
         /// </summary>
         [Display(Name = "Боевой вертолёт")]
-        CombatHelicopter = 3
+        CombatHelicopter
     }
 }

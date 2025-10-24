@@ -22,18 +22,18 @@ namespace DataGridViewProject.Models
         /// Полное имя
         /// </summary>
         [Required(ErrorMessage = "ФИО обязательно")]
-        [StringLength(100, MinimumLength = 5, ErrorMessage = "ФИО должно быть от 5 до 100 символов")]
+        [StringLength(Constants.MaxLengthFullName,MinimumLength = Constants.MinLengthFullName)]
         public string FullName { get; set; } = string.Empty;
 
         /// <inheritdoc/>
-        public Gender Gender { get; set; } = 0;
+        public Gender Gender { get; set; }
 
         /// <summary>
         /// Дата рождения
         /// </summary>
         [Required(ErrorMessage = "Дата рождения обязательна")]
         [CustomValidation(typeof(Student), nameof(ValidateBirthDate))]
-        public DateTime BirthDate { get; set; } = DateTime.Now.AddYears(-6);
+        public DateTime BirthDate { get; set; } 
 
 
         /// <inheritdoc/>
@@ -42,19 +42,19 @@ namespace DataGridViewProject.Models
         /// <summary>
         /// Баллы по математике
         /// </summary>
-        [Range(0, 100, ErrorMessage = "Баллы по математике от 0 до 100")]
+        [Range(Constants.MinScore, Constants.MaxScore)]
         public decimal MathScore { get; set; }
 
         /// <summary>
         /// Баллые по русскому языку
         /// </summary>
-        [Range(0, 100, ErrorMessage = "Баллы по русскому от 0 до 100")]
+        [Range(Constants.MinScore, Constants.MaxScore)]
         public decimal RussianScore { get; set; }
 
         /// <summary>
         /// Баллы по информатике
         /// </summary>
-        [Range(0, 100, ErrorMessage = "Баллы по информатике от 0 до 100")]
+        [Range(Constants.MinScore, Constants.MaxScore)]
         public decimal InformaticsScore { get; set; }
 
         /// <summary>
@@ -64,8 +64,8 @@ namespace DataGridViewProject.Models
 
         public static ValidationResult? ValidateBirthDate(DateTime date, ValidationContext context)
         {
-            if (date > DateTime.Now.AddYears(-6))
-                return new ValidationResult("Возраст должен быть больше 6 лет");
+            if (date > DateTime.Now.AddYears(-Constants.MinYear))
+                return new ValidationResult($"Возраст должен быть больше {Constants.MinYear} лет");
             return ValidationResult.Success;
         }
     }

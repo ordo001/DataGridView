@@ -18,10 +18,10 @@ namespace DataGridViewProject.Infrastructure
         /// Добавить Binding
         /// </summary>
         public static void AddBinding<TControl, TSource>(
-            this TControl control,
-            Expression<Func<TControl, object>> destinationProperty,
-            BindingSource bindingSource,
-            Expression<Func<TSource, object>> sourceProperty,
+            this TControl control, // тип элемента управления
+            Expression<Func<TControl, object>> destinationProperty, // свойство контрола, которое будет связано
+            TSource source, // тип модели данных
+            Expression<Func<TSource, object>> sourceProperty, // свойство модели, которое будет связано
             ErrorProvider? errorProvider = null)
             where TControl : Control
             where TSource : class
@@ -31,34 +31,41 @@ namespace DataGridViewProject.Infrastructure
 
             var existing = control.DataBindings[destPropName];
             if (existing != null)
+            {
                 control.DataBindings.Remove(existing);
+            }
 
-            var binding = new Binding(destPropName, bindingSource, sourcePropName, true, DataSourceUpdateMode.OnPropertyChanged);
+            var binding = new Binding(destPropName, source, sourcePropName)
+            {
+                DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged
+            };
+
             control.DataBindings.Add(binding);
 
             if (errorProvider != null)
             {
-                var sourceType = typeof(TSource);
-                var sourcePropInfo = sourceType.GetProperty(sourcePropName);
-                var validationAttributes = sourcePropInfo?.GetCustomAttributes<ValidationAttribute>();
+                var sourcePropertyInfo = source.GetType().GetProperty(sourcePropName);
+                var validationAttributes = sourcePropertyInfo?.GetCustomAttributes<ValidationAttribute>();
 
                 if (validationAttributes?.Any() == true)
                 {
                     control.Validating += (sender, e) =>
                     {
-                        if (bindingSource.Current is not TSource source)
-                            return;
-
                         var context = new ValidationContext(source) { MemberName = sourcePropName };
                         var results = new List<ValidationResult>();
 
                         errorProvider.SetError(control, string.Empty);
 
-                        var propertyValue = sourcePropInfo?.GetValue(source);
+                        var propertyValue = sourcePropertyInfo?.GetValue(source);
                         var isValid = Validator.TryValidateProperty(propertyValue, context, results);
 
                         if (!isValid)
-                            errorProvider.SetError(control, results.First().ErrorMessage);
+                        {
+                            foreach (var error in results)
+                            {
+                                errorProvider.SetError(control, error.ErrorMessage);
+                            }
+                        }
                     };
                 }
             }
