@@ -21,7 +21,6 @@ namespace DataGridViewProject
         {
             InitializeComponent();
             dataGridView.AutoGenerateColumns = false;
-            bindingSource.DataSource = typeof(Student);
             bindingSource.DataSource = studentService.GetAll();
             dataGridView.DataSource = bindingSource;
 
