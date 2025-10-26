@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace DataGridViewProject.Models
 {
     /// <summary>
-    /// Статический класс для констант
+    /// Класс для констант
     /// </summary>
-    public static class Constants
+    public class Constants
     {
         /// <summary>
         /// Максимальная длина ФИО

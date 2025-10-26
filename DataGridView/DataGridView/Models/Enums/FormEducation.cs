@@ -11,19 +11,18 @@ namespace DataGridViewProject.Models.Enums
         /// Неизвестная
         /// </summary>
         [Display(Name = "Неизвестная")]
-        Unknown = 0,
+        Unknown,
 
         /// <summary>
         /// Очная
         /// </summary>
         [Display(Name = "Очная")]
-        FullTime = 1,
+        FullTime,
 
         /// <summary>
         /// Заочная
         /// </summary>
         [Display(Name = "Заочная")]
-        Correspondence = 2,
-
+        Correspondence,
     }
 }

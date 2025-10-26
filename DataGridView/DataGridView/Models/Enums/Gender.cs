@@ -29,6 +29,6 @@ namespace DataGridViewProject.Models.Enums
         /// Боевой вертолёт
         /// </summary>
         [Display(Name = "Боевой вертолёт")]
-        CombatHelicopter
+        CombatHelicopter,
     }
 }

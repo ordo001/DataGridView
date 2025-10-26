@@ -1,4 +1,5 @@
 ﻿using DataGridViewProject.Models.Enums;
+using DataGridViewProject.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,18 +27,20 @@ namespace DataGridViewProject.Models
         public string FullName { get; set; } = string.Empty;
 
         /// <inheritdoc/>
+        [Required(ErrorMessage = "Пол обязателен")]
         public Gender Gender { get; set; }
 
         /// <summary>
         /// Дата рождения
         /// </summary>
         [Required(ErrorMessage = "Дата рождения обязательна")]
-        [CustomValidation(typeof(Student), nameof(ValidateBirthDate))]
-        public DateTime BirthDate { get; set; } 
+        [CustomValidation(typeof(Student), nameof(CustomValidate.ValidateBirthDate))]
+        public DateTime BirthDate { get; set; }
 
 
         /// <inheritdoc/>
-        public FormEducation FormEducation { get; set; } = 0;
+        [Required(ErrorMessage = "Форма обучения обязательна")]
+        public FormEducation FormEducation { get; set; }
 
         /// <summary>
         /// Баллы по математике
@@ -60,13 +63,6 @@ namespace DataGridViewProject.Models
         /// <summary>
         /// Общее количество баллов
         /// </summary>
-        public decimal TotalScore => MathScore + RussianScore + InformaticsScore;
-
-        public static ValidationResult? ValidateBirthDate(DateTime date, ValidationContext context)
-        {
-            if (date > DateTime.Now.AddYears(-Constants.MinYear))
-                return new ValidationResult($"Возраст должен быть больше {Constants.MinYear} лет");
-            return ValidationResult.Success;
-        }
+        public decimal TotalScore;
     }
 }

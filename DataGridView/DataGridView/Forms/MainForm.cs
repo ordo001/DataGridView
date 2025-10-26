@@ -39,7 +39,7 @@ namespace DataGridViewProject
             ScoresMath.DataPropertyName = nameof(Student.MathScore);
             ScoresRussian.DataPropertyName = nameof(Student.RussianScore);
             ScoreInform.DataPropertyName = nameof(Student.InformaticsScore);
-            TotalScores.DataPropertyName = nameof(Student.TotalScore);
+            //TotalScores.DataPropertyName = nameof(Student.TotalScore);
         }
 
 
@@ -93,6 +93,12 @@ namespace DataGridViewProject
             if (e.Value is Enum enumVal)
             {
                 e.Value = enumVal.GetDisplayName();
+            }
+
+            if (dataGridView.Columns[e.ColumnIndex].Name == "TotalScores"
+                && dataGridView.Rows[e.RowIndex].DataBoundItem is Student student)
+            {
+                e.Value = student.MathScore + student.RussianScore + student.InformaticsScore;
             }
         }
 

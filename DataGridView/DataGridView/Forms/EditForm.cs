@@ -73,12 +73,18 @@ namespace DataGridViewProject.Forms
             {
                 foreach (var result in results)
                 {
-                    var member = result.MemberNames.FirstOrDefault();
-                    var control = Controls.Cast<Control>()
-                        .FirstOrDefault(c => c.DataBindings.Cast<Binding>().Any(b => b.BindingMemberInfo.BindingField == member));
+                    foreach (var member in result.MemberNames)
+                    {
+                        var control = Controls.Cast<Control>()
+                            .FirstOrDefault(c => c.DataBindings.Cast<Binding>()
+                                .Any(b => b.BindingMemberInfo.BindingField == member));
 
-                    if (control != null)
-                        errorProvider.SetError(control, result.ErrorMessage);
+                        if (control != null)
+                        {
+                            errorProvider.SetError(control, result.ErrorMessage);
+                            break;
+                        }
+                    }
                 }
                 return;
             }

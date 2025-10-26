@@ -61,7 +61,11 @@ namespace DataGridViewProject.Infrastructure
 
                         if (!isValid)
                         {
-                            foreach (var error in results)
+                            var erorrs = results.Where(r => 
+                                r.MemberNames.Contains(sourcePropName) ||
+                                !r.MemberNames.Any()
+                            );
+                            foreach (var error in erorrs)
                             {
                                 errorProvider.SetError(control, error.ErrorMessage);
                             }
