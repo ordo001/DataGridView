@@ -59,10 +59,5 @@ namespace DataGridViewProject.Models
         /// </summary>
         [Range(Constants.MinScore, Constants.MaxScore)]
         public decimal InformaticsScore { get; set; }
-
-        /// <summary>
-        /// Общее количество баллов
-        /// </summary>
-        public decimal TotalScore;
     }
 }

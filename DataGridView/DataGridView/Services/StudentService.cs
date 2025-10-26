@@ -93,7 +93,7 @@ namespace DataGridViewProject.Services
         /// Получить количество студентов которые набрали больше 150 баллов
         /// </summary>
         /// <returns></returns>
-        public int GetCountAbove150() => students.Count(x => x.TotalScore > 150);
+        public int GetCountAbove150() => students.Count(x => (x.InformaticsScore + x.MathScore + x.RussianScore) > 150);
 
 
     }
