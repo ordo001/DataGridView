@@ -25,6 +25,11 @@ namespace DataGridViewProject.Models
         /// Минимальный год поступления
         /// </summary>
         public const int MinYear = 6;
+        
+        /// <summary>
+        /// Минимальный год поступления
+        /// </summary>
+        public const int MaxYear = 21;
 
         /// <summary>
         /// Минимальное кол-во баллов

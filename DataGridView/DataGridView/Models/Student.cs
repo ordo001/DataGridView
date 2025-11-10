@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataGridViewProject.Models.Attributes;
 
 namespace DataGridViewProject.Models
 {
@@ -34,10 +35,9 @@ namespace DataGridViewProject.Models
         /// Дата рождения
         /// </summary>
         [Required(ErrorMessage = "Дата рождения обязательна")]
-        [CustomValidation(typeof(Student), nameof(CustomValidate.ValidateBirthDate))]
+        [DateRange(Constants.MinYear, Constants.MaxYear)]
         public DateTime BirthDate { get; set; }
-
-
+        
         /// <inheritdoc/>
         [Required(ErrorMessage = "Форма обучения обязательна")]
         public FormEducation FormEducation { get; set; }

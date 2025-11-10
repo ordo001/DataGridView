@@ -38,16 +38,16 @@ namespace DataGridViewProject.Forms
         private void InitBindings()
         {
             comboBoxFormEducation.DataSource = Enum.GetValues(typeof(FormEducation))
-                    .Cast<FormEducation>()
-                    .Select(g => new { Value = g, Name = g.GetDisplayName() })
-                    .ToArray();
+                .Cast<FormEducation>()
+                .Select(g => new { Value = g, Name = g.GetDisplayName() })
+                .ToArray();
             comboBoxFormEducation.DisplayMember = "Name";
             comboBoxFormEducation.ValueMember = "Value";
 
             comboBoxGender.DataSource = Enum.GetValues(typeof(Gender))
-                    .Cast<Gender>()
-                    .Select(g => new { Value = g, Name = g.GetDisplayName() })
-                    .ToArray();
+                .Cast<Gender>()
+                .Select(g => new { Value = g, Name = g.GetDisplayName() })
+                .ToArray();
             comboBoxGender.DisplayMember = "Name";
             comboBoxGender.ValueMember = "Value";
 
@@ -71,27 +71,33 @@ namespace DataGridViewProject.Forms
             var valid = Validator.TryValidateObject(Student, context, results, true);
             if (!valid)
             {
-                foreach (var result in results)
+                foreach (var validationResult in results)
                 {
-                    foreach (var member in result.MemberNames)
+                    foreach (var memberName in validationResult.MemberNames)
                     {
-                        var control = Controls.Cast<Control>()
-                            .FirstOrDefault(c => c.DataBindings.Cast<Binding>()
-                                .Any(b => b.BindingMemberInfo.BindingField == member));
+                        Control? control = memberName switch
+                        {
+                            nameof(Student.FullName) => textBoxFullName,
+                            nameof(Student.Gender) => comboBoxGender,
+                            nameof(Student.BirthDate) => maskedTextBoxDate,
+                            nameof(Student.FormEducation) => comboBoxFormEducation,
+                            nameof(Student.MathScore) => numericUpDownMath,
+                            nameof(Student.RussianScore) => numericUpDownRussian,
+                            nameof(Student.InformaticsScore) => numericUpDownInformatics,
+                            _ => null
+                        };
 
                         if (control != null)
                         {
-                            errorProvider.SetError(control, result.ErrorMessage);
-                            break;
+                            errorProvider.SetError(control, validationResult.ErrorMessage);
                         }
                     }
                 }
+
                 return;
             }
 
             DialogResult = DialogResult.OK;
-
-
         }
     }
 }
