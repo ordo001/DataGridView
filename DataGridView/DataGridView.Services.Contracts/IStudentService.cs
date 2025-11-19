@@ -3,9 +3,9 @@ using DataGridView.Entities;
 namespace DataGridView.Services.Contracts;
 
 /// <summary>
-/// Интерфейс хранилища
+/// Интерфейс для сервиса студентов
 /// </summary>
-public interface IStorage
+public interface IStudentService
 {
     /// <summary>
     /// Добавить студента
@@ -15,7 +15,7 @@ public interface IStorage
     /// <summary>
     /// Удалить студента
     /// </summary>
-    public Task Remove(Student student, CancellationToken cancellationToken);
+    public Task Remove(Guid id, CancellationToken cancellationToken);
     
     /// <summary>
     /// Обновить студента
@@ -23,12 +23,12 @@ public interface IStorage
     public Task Update(Student student, CancellationToken cancellationToken);
     
     /// <summary>
-    /// Получить студента по идентификатору
-    /// </summary>
-    public Task<Student> GetById(Guid id, CancellationToken cancellationToken);
-    
-    /// <summary>
     /// Получить всех студентов
     /// </summary>
     public Task<ICollection<Student>> GetAll(CancellationToken cancellationToken);
+    
+    /// <summary>
+    /// Получить всех студентов у которых общее кол-во баллов больше указанного
+    /// </summary>
+    public Task<int> Goida(int count, CancellationToken cancellationToken);
 }

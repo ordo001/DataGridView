@@ -10,7 +10,7 @@ namespace DataGridViewProject.Forms
     /// </summary>
     public partial class MainForm : Form
     {
-        private readonly InMemoryStorage storage = new();
+        private readonly IStudentService studentService = new StudentService(new InMemoryStorage());
         private readonly BindingSource bindingSource = new();
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace DataGridViewProject.Forms
 
         private async void InitBindingSources()
         {
-            var stds = await storage.GetAll(CancellationToken.None);
+            var stds = await studentService.GetAll(CancellationToken.None);
             bindingSource.DataSource = stds.ToList();
             dataGridView.DataSource = bindingSource;
         }
@@ -49,10 +49,9 @@ namespace DataGridViewProject.Forms
 
         private async Task RefreshStats()
         {
-            var students = await storage.GetAll(CancellationToken.None);
-            toolStripStatusLabelCount.Text = $"Всего студентов: {students.Count()}";
-            toolStripStatusLabelStatusStudent.Text = $"Всего студентов с более 150 баллов: {students.Count(x => 
-                x.InformaticsScore + x.MathScore + x.RussianScore > ServiceConstants.MinTotalScore)}";
+            var students = await studentService.GetAll(CancellationToken.None);
+            toolStripStatusLabelCount.Text = $"Всего студентов: {students.Count}";
+            toolStripStatusLabelStatusStudent.Text = $"Всего студентов с более 150 баллов: {await studentService.Goida(Constants.MinTotalScore, CancellationToken.None)}";
         }
 
         private async void btnAdd_Click(object sender, EventArgs e)
@@ -60,8 +59,8 @@ namespace DataGridViewProject.Forms
             var form = new EditForm(new Student());
             if (form.ShowDialog() == DialogResult.OK)
             {
-                await storage.Add(form.Student, CancellationToken.None);
-                bindingSource.DataSource = storage.GetAll(CancellationToken.None);
+                await studentService.Add(form.Student, CancellationToken.None);
+                bindingSource.DataSource = await studentService.GetAll(CancellationToken.None);
                 await RefreshStats();
             }
         }
@@ -88,8 +87,8 @@ namespace DataGridViewProject.Forms
             var form = new EditForm(clone);
             if (form.ShowDialog() == DialogResult.OK)
             {
-                await storage.Update(form.Student, CancellationToken.None);
-                bindingSource.DataSource = await storage.GetAll(CancellationToken.None);
+                await studentService.Update(form.Student, CancellationToken.None);
+                bindingSource.DataSource = await studentService.GetAll(CancellationToken.None);
                 await RefreshStats();
             }
         }
@@ -116,9 +115,8 @@ namespace DataGridViewProject.Forms
             }
             if (MessageBox.Show("Удалить запись?", "Подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                await storage.Remove(selected.Id,  CancellationToken.None);
-                var stds  = await storage.GetAll(CancellationToken.None);
-                bindingSource.DataSource = stds.ToList();
+                await studentService.Remove(selected.Id,  CancellationToken.None);
+                bindingSource.DataSource = await studentService.GetAll(CancellationToken.None);
                 await RefreshStats();
             }
         }

@@ -4,10 +4,32 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+
+        <Authors>flogri</Authors>
+        <Product>FlogriNuget</Product>
+        <Description> Сервисный слой для работы с DataGridView. Александров Артём ИП-22-3. Предоставляет функциональность для управления студентами (CRUD) в оперативной памяти.</Description>
+        <Version>1.0.1</Version>
+        <PackageTags>winforms;datagridview;students;crud;services</PackageTags>
+        <PackageIcon>icon.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <RootNamespace>DataGridView.Services</RootNamespace>
+        
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\DataGridView.Services.Contracts\DataGridView.Services.Contracts.csproj" />
+      <ProjectReference Include="..\DataGridView.Entities\DataGridView.Entities.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="icon.png">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+        <None Update="README.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
     </ItemGroup>
 
 </Project>

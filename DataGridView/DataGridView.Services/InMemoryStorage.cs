@@ -51,10 +51,9 @@ public class InMemoryStorage : IStorage
         return Task.CompletedTask;
     }
 
-    public Task Remove(Guid id, CancellationToken cancellationToken)
+    public Task Remove(Student student, CancellationToken cancellationToken)
     {
-        var index = students.FindIndex(x => x.Id == id);
-        students.RemoveAt(index);
+        students.Remove(student);
         return Task.CompletedTask;
     }
 
@@ -65,9 +64,9 @@ public class InMemoryStorage : IStorage
         return Task.CompletedTask;
     }
 
-    public Task GetById(Guid id, CancellationToken cancellationToken)
+    public Task<Student> GetById(Guid id, CancellationToken cancellationToken)
     {
-        return Task.FromResult(students.FirstOrDefault(x => x.Id == id));
+        return Task.FromResult(students.FirstOrDefault(x => x.Id == id))!;
     }
 
     public async Task<ICollection<Student>> GetAll(CancellationToken cancellationToken)

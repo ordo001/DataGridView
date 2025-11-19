@@ -1,9 +1,9 @@
-namespace DataGridView.Services.Contracts;
+namespace DataGridViewProject;
 
 /// <summary>
-/// Контстанты сервисов
+/// Контстанты 
 /// </summary>
-public class ServiceConstants
+public class Constants
 {
     /// <summary>
     /// Минимальное общее кол-во баллов
