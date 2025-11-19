@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataGridViewProject.Models.Enums
+namespace DataGridView.Entities.Enums
 {
     /// <summary>
     /// Форма обучения

@@ -8,4 +8,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataGridView.Entities\DataGridView.Entities.csproj" />
+    <ProjectReference Include="..\DataGridView.Services\DataGridView.Services.csproj" />
+  </ItemGroup>
+
 </Project>

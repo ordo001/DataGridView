@@ -1,3 +1,5 @@
+using DataGridViewProject.Forms;
+
 namespace DataGridViewProject
 {
     internal static class Program

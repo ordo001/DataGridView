@@ -5,6 +5,12 @@ VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewProject", "DataGridView\DataGridViewProject.csproj", "{AD4B0506-1F84-4030-B827-26D024D9B024}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridView.Entities", "DataGridView.Entities\DataGridView.Entities.csproj", "{605FE889-C62E-4C53-B514-A0E1C21BAF53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridView.Services.Contracts", "DataGridView.Services.Contracts\DataGridView.Services.Contracts.csproj", "{86D5A052-112D-4F97-B181-8AF7CD0DDC21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridView.Services", "DataGridView.Services\DataGridView.Services.csproj", "{0DAD6E1B-680F-45FE-8D9E-BB7717629FCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{AD4B0506-1F84-4030-B827-26D024D9B024}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD4B0506-1F84-4030-B827-26D024D9B024}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD4B0506-1F84-4030-B827-26D024D9B024}.Release|Any CPU.Build.0 = Release|Any CPU
+		{605FE889-C62E-4C53-B514-A0E1C21BAF53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{605FE889-C62E-4C53-B514-A0E1C21BAF53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{605FE889-C62E-4C53-B514-A0E1C21BAF53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{605FE889-C62E-4C53-B514-A0E1C21BAF53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86D5A052-112D-4F97-B181-8AF7CD0DDC21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86D5A052-112D-4F97-B181-8AF7CD0DDC21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86D5A052-112D-4F97-B181-8AF7CD0DDC21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86D5A052-112D-4F97-B181-8AF7CD0DDC21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DAD6E1B-680F-45FE-8D9E-BB7717629FCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DAD6E1B-680F-45FE-8D9E-BB7717629FCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DAD6E1B-680F-45FE-8D9E-BB7717629FCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DAD6E1B-680F-45FE-8D9E-BB7717629FCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
