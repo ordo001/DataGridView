@@ -9,7 +9,7 @@ namespace DataGridView.Services;
 public class StudentService : IStudentService
 {
     private readonly IStorage storage;
-    
+
     /// <summary>
     /// Инициализировать новый экземпляр <see cref="StudentService"/>
     /// </summary>
@@ -17,7 +17,7 @@ public class StudentService : IStudentService
     {
         this.storage = storage;
     }
-    
+
     public async Task Add(Student student, CancellationToken cancellationToken)
     {
         await storage.Add(student, cancellationToken);
@@ -32,7 +32,7 @@ public class StudentService : IStudentService
     public async Task Update(Student student, CancellationToken cancellationToken)
     {
         var std = await storage.GetById(student.Id, cancellationToken);
-        
+
         std.BirthDate = student.BirthDate;
         std.Gender = student.Gender;
         std.FormEducation = student.FormEducation;
@@ -40,7 +40,7 @@ public class StudentService : IStudentService
         std.InformaticsScore = student.InformaticsScore;
         std.RussianScore = student.RussianScore;
         std.MathScore = student.MathScore;
-        
+
         await storage.Update(std, cancellationToken);
     }
 
@@ -49,9 +49,15 @@ public class StudentService : IStudentService
         return await storage.GetAll(cancellationToken);
     }
 
-    public async Task<int> Goida(int count, CancellationToken cancellationToken)
+    public async Task<int> GetStudentsByMinScore(int count, CancellationToken cancellationToken)
     {
         var stds = await storage.GetAll(cancellationToken);
         return stds.Count(x => x.InformaticsScore + x.MathScore + x.RussianScore > count);
     }
+
+    public async Task<int> GetCountStudents(CancellationToken cancellationToken)
+    {
+        return await storage.GetCount(cancellationToken);
+    }
+
 }

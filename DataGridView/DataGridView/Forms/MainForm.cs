@@ -10,27 +10,29 @@ namespace DataGridViewProject.Forms
     /// </summary>
     public partial class MainForm : Form
     {
-        private readonly IStudentService studentService = new StudentService(new InMemoryStorage());
+        private readonly IStudentService studentService;
         private readonly BindingSource bindingSource = new();
 
         /// <summary>
         /// Инициализировать новый экземпляр <see cref="MainForm"/>
         /// </summary>
-        public MainForm()
+        public MainForm(StudentService studentService)
         {
+            this.studentService = studentService;
             InitializeComponent();
             dataGridView.AutoGenerateColumns = false;
-            InitBindingSources();
+            UpdateBindingSources();
 
             ConfigureColumns();
             _ = RefreshStats();
         }
 
-        private async void InitBindingSources()
+        private async Task UpdateBindingSources()
         {
             var stds = await studentService.GetAll(CancellationToken.None);
             bindingSource.DataSource = stds.ToList();
             dataGridView.DataSource = bindingSource;
+            await RefreshStats();
         }
 
         private void ConfigureColumns()
@@ -43,15 +45,13 @@ namespace DataGridViewProject.Forms
             ScoresMath.DataPropertyName = nameof(Student.MathScore);
             ScoresRussian.DataPropertyName = nameof(Student.RussianScore);
             ScoreInform.DataPropertyName = nameof(Student.InformaticsScore);
-            //TotalScores.DataPropertyName = nameof(Student.TotalScore);
         }
 
 
         private async Task RefreshStats()
         {
-            var students = await studentService.GetAll(CancellationToken.None);
-            toolStripStatusLabelCount.Text = $"Всего студентов: {students.Count}";
-            toolStripStatusLabelStatusStudent.Text = $"Всего студентов с более 150 баллов: {await studentService.Goida(Constants.MinTotalScore, CancellationToken.None)}";
+            toolStripStatusLabelCount.Text = $"Всего студентов: {await studentService.GetCountStudents(CancellationToken.None)}";
+            toolStripStatusLabelStatusStudent.Text = $"Всего студентов с более 150 баллов: {await studentService.GetStudentsByMinScore(Constants.MinTotalScore, CancellationToken.None)}";
         }
 
         private async void btnAdd_Click(object sender, EventArgs e)
@@ -60,8 +60,7 @@ namespace DataGridViewProject.Forms
             if (form.ShowDialog() == DialogResult.OK)
             {
                 await studentService.Add(form.Student, CancellationToken.None);
-                bindingSource.DataSource = await studentService.GetAll(CancellationToken.None);
-                await RefreshStats();
+                await UpdateBindingSources();
             }
         }
 
@@ -88,8 +87,7 @@ namespace DataGridViewProject.Forms
             if (form.ShowDialog() == DialogResult.OK)
             {
                 await studentService.Update(form.Student, CancellationToken.None);
-                bindingSource.DataSource = await studentService.GetAll(CancellationToken.None);
-                await RefreshStats();
+                await UpdateBindingSources();
             }
         }
 
@@ -116,8 +114,7 @@ namespace DataGridViewProject.Forms
             if (MessageBox.Show("Удалить запись?", "Подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 await studentService.Remove(selected.Id,  CancellationToken.None);
-                bindingSource.DataSource = await studentService.GetAll(CancellationToken.None);
-                await RefreshStats();
+                await UpdateBindingSources();
             }
         }
 

@@ -30,5 +30,10 @@ public interface IStudentService
     /// <summary>
     /// Получить всех студентов у которых общее кол-во баллов больше указанного
     /// </summary>
-    public Task<int> Goida(int count, CancellationToken cancellationToken);
+    public Task<int> GetStudentsByMinScore(int count, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Получить количество студентов
+    /// </summary>
+    public Task<int> GetCountStudents(CancellationToken cancellationToken);
 }

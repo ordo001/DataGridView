@@ -4,6 +4,13 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        
+        <Authors>flogri</Authors>
+        <Product>FlogriNuget</Product>
+        <Description> </Description>
+        <Version>1.0.3</Version>
+        <PackageTags>winforms;datagridview;students;crud;services</PackageTags>
+        <RootNamespace>DataGridView.Services.Contracts</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

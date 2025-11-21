@@ -69,8 +69,13 @@ public class InMemoryStorage : IStorage
         return Task.FromResult(students.FirstOrDefault(x => x.Id == id))!;
     }
 
-    public async Task<ICollection<Student>> GetAll(CancellationToken cancellationToken)
+    public Task<List<Student>> GetAll(CancellationToken cancellationToken)
     {
-        return students;
+        return Task.FromResult(students);
+    }
+
+    public Task<int> GetCount(CancellationToken cancellationToken)
+    {
+        return Task.FromResult(students.Count);
     }
 }

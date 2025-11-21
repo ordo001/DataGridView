@@ -30,5 +30,10 @@ public interface IStorage
     /// <summary>
     /// Получить всех студентов
     /// </summary>
-    public Task<ICollection<Student>> GetAll(CancellationToken cancellationToken);
+    public Task<List<Student>> GetAll(CancellationToken cancellationToken);
+    
+    /// <summary>
+    /// Получить количество студентов
+    /// </summary>
+    public Task<int> GetCount(CancellationToken cancellationToken);
 }
