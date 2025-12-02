@@ -8,4 +8,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Flogri.DataGridView.Services" Version="1.0.2" />
+      <PackageReference Include="DataGridView.Services.Contracts" Version="1.0.3" />
+  </ItemGroup>
+    
+
 </Project>

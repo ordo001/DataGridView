@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataGridViewProject.Models.Attributes
+namespace DataGridView.Entities.Attributes
 {
     /// <summary>
     /// Атрибут валидации для проверки возраста

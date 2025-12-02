@@ -1,31 +1,38 @@
-using DataGridViewProject.Forms;
+using DataGridView.Entities;
+using DataGridView.Services;
+using DataGridView.Services.Contracts;
 using DataGridViewProject.Infrastructure;
-using DataGridViewProject.Models;
-using DataGridViewProject.Models.Enums;
-using DataGridViewProject.Services;
 
-namespace DataGridViewProject
+namespace DataGridViewProject.Forms
 {
     /// <summary>
     /// Главная форма
     /// </summary>
     public partial class MainForm : Form
     {
-        private readonly StudentService studentService = new();
+        private readonly IStudentService studentService;
         private readonly BindingSource bindingSource = new();
 
         /// <summary>
         /// Инициализировать новый экземпляр <see cref="MainForm"/>
         /// </summary>
-        public MainForm()
+        public MainForm(StudentService studentService)
         {
+            this.studentService = studentService;
             InitializeComponent();
             dataGridView.AutoGenerateColumns = false;
-            bindingSource.DataSource = studentService.GetAll();
-            dataGridView.DataSource = bindingSource;
+            UpdateBindingSources();
 
             ConfigureColumns();
-            RefreshStats();
+            _ = RefreshStats();
+        }
+
+        private async Task UpdateBindingSources()
+        {
+            var stds = await studentService.GetAll(CancellationToken.None);
+            bindingSource.DataSource = stds.ToList();
+            dataGridView.DataSource = bindingSource;
+            await RefreshStats();
         }
 
         private void ConfigureColumns()
@@ -38,28 +45,26 @@ namespace DataGridViewProject
             ScoresMath.DataPropertyName = nameof(Student.MathScore);
             ScoresRussian.DataPropertyName = nameof(Student.RussianScore);
             ScoreInform.DataPropertyName = nameof(Student.InformaticsScore);
-            //TotalScores.DataPropertyName = nameof(Student.TotalScore);
         }
 
 
-        private void RefreshStats()
+        private async Task RefreshStats()
         {
-            toolStripStatusLabelCount.Text = $"Всего студентов: {studentService.GetCount()}";
-            toolStripStatusLabelStatusStudent.Text = $"Всего студентов с более 150 баллов: {studentService.GetCountAbove150()}";
+            toolStripStatusLabelCount.Text = $"Всего студентов: {await studentService.GetCountStudents(CancellationToken.None)}";
+            toolStripStatusLabelStatusStudent.Text = $"Всего студентов с более 150 баллов: {await studentService.GetStudentsByMinScore(Constants.MinTotalScore, CancellationToken.None)}";
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private async void btnAdd_Click(object sender, EventArgs e)
         {
             var form = new EditForm(new Student());
             if (form.ShowDialog() == DialogResult.OK)
             {
-                studentService.Add(form.Student);
-                bindingSource.DataSource = studentService.GetAll();
-                RefreshStats();
+                await studentService.Add(form.Student, CancellationToken.None);
+                await UpdateBindingSources();
             }
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private async void btnEdit_Click(object sender, EventArgs e)
         {
             if (bindingSource.Current is not Student selected)
             {
@@ -81,9 +86,8 @@ namespace DataGridViewProject
             var form = new EditForm(clone);
             if (form.ShowDialog() == DialogResult.OK)
             {
-                studentService.Update(form.Student);
-                bindingSource.DataSource = studentService.GetAll();
-                RefreshStats();
+                await studentService.Update(form.Student, CancellationToken.None);
+                await UpdateBindingSources();
             }
         }
 
@@ -101,7 +105,7 @@ namespace DataGridViewProject
             }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private async void btnDelete_Click(object sender, EventArgs e)
         {
             if (bindingSource.Current is not Student selected)
             {
@@ -109,9 +113,8 @@ namespace DataGridViewProject
             }
             if (MessageBox.Show("Удалить запись?", "Подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                studentService.Delete(selected.Id);
-                bindingSource.DataSource = studentService.GetAll();
-                RefreshStats();
+                await studentService.Remove(selected.Id,  CancellationToken.None);
+                await UpdateBindingSources();
             }
         }
 

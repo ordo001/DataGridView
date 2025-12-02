@@ -1,17 +1,7 @@
 ﻿using DataGridViewProject.Infrastructure;
-using DataGridViewProject.Models;
-using DataGridViewProject.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using DataGridView.Entities;
+using DataGridView.Entities.Enums;
 
 namespace DataGridViewProject.Forms
 {

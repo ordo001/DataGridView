@@ -1,4 +1,4 @@
-﻿namespace DataGridViewProject
+﻿namespace DataGridViewProject.Forms
 {
     partial class MainForm
     {
@@ -35,7 +35,7 @@
             btnDelete = new ToolStripLabel();
             btnEdit = new ToolStripLabel();
             btnAdd = new ToolStripLabel();
-            dataGridView = new DataGridView();
+            dataGridView = new System.Windows.Forms.DataGridView();
             Fio = new DataGridViewTextBoxColumn();
             Gender = new DataGridViewTextBoxColumn();
             DateOfBirth = new DataGridViewTextBoxColumn();
@@ -207,7 +207,7 @@
         private StatusStrip statusStripAuto;
         private ToolStripStatusLabel toolStripStatusLabelCount;
         private ToolStrip toolStripMenu;
-        private DataGridView dataGridView;
+        private System.Windows.Forms.DataGridView dataGridView;
         private ToolStripStatusLabel toolStripStatusLabelStatusStudent;
         private DataGridViewTextBoxColumn Fio;
         private DataGridViewTextBoxColumn Gender;

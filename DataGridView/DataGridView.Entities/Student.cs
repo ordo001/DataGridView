@@ -1,14 +1,8 @@
-﻿using DataGridViewProject.Models.Enums;
-using DataGridViewProject.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataGridViewProject.Models.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
+using DataGridView.Entities.Attributes;
+using DataGridView.Entities.Enums;
 
-namespace DataGridViewProject.Models
+namespace DataGridView.Entities
 {
     /// <summary>
     /// Модель ученика
@@ -24,7 +18,7 @@ namespace DataGridViewProject.Models
         /// Полное имя
         /// </summary>
         [Required(ErrorMessage = "ФИО обязательно")]
-        [StringLength(Constants.MaxLengthFullName,MinimumLength = Constants.MinLengthFullName)]
+        [StringLength(EntityConstants.MaxLengthFullName,MinimumLength = EntityConstants.MinLengthFullName)]
         public string FullName { get; set; } = string.Empty;
 
         /// <inheritdoc/>
@@ -35,7 +29,7 @@ namespace DataGridViewProject.Models
         /// Дата рождения
         /// </summary>
         [Required(ErrorMessage = "Дата рождения обязательна")]
-        [DateRange(Constants.MinYear, Constants.MaxYear)]
+        [DateRange(EntityConstants.MinYear, EntityConstants.MaxYear)]
         public DateTime BirthDate { get; set; }
         
         /// <inheritdoc/>
@@ -45,19 +39,19 @@ namespace DataGridViewProject.Models
         /// <summary>
         /// Баллы по математике
         /// </summary>
-        [Range(Constants.MinScore, Constants.MaxScore)]
+        [Range(EntityConstants.MinScore, EntityConstants.MaxScore)]
         public decimal MathScore { get; set; }
 
         /// <summary>
         /// Баллые по русскому языку
         /// </summary>
-        [Range(Constants.MinScore, Constants.MaxScore)]
+        [Range(EntityConstants.MinScore, EntityConstants.MaxScore)]
         public decimal RussianScore { get; set; }
 
         /// <summary>
         /// Баллы по информатике
         /// </summary>
-        [Range(Constants.MinScore, Constants.MaxScore)]
+        [Range(EntityConstants.MinScore, EntityConstants.MaxScore)]
         public decimal InformaticsScore { get; set; }
     }
 }

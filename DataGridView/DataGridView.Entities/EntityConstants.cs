@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataGridViewProject.Models
+﻿namespace DataGridView.Entities
 {
     /// <summary>
-    /// Класс для констант
+    /// Класс для констант сущностей
     /// </summary>
-    public class Constants
+    public class EntityConstants
     {
         /// <summary>
         /// Максимальная длина ФИО
