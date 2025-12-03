@@ -1,5 +1,7 @@
+using System.Diagnostics;
 using DataGridView.Entities;
 using DataGridView.Services.Contracts;
+using Microsoft.Extensions.Logging;
 
 namespace DataGridView.Services;
 
@@ -9,55 +11,112 @@ namespace DataGridView.Services;
 public class StudentService : IStudentService
 {
     private readonly IStorage storage;
+    private readonly ILogger logger;
 
     /// <summary>
     /// Инициализировать новый экземпляр <see cref="StudentService"/>
     /// </summary>
-    public StudentService(IStorage storage)
+    public StudentService(IStorage storage, ILoggerFactory loggerFactory)
     {
         this.storage = storage;
+        logger = loggerFactory.CreateLogger(nameof(StudentService));
     }
 
     public async Task Add(Student student, CancellationToken cancellationToken)
     {
-        await storage.Add(student, cancellationToken);
+        var sw = Stopwatch.StartNew();
+        try
+        {
+            await storage.Add(student, cancellationToken);
+        }
+        finally
+        {
+            sw.Stop();
+            logger.LogInformation($"Add выполнен за {sw.ElapsedMilliseconds} мс");
+        }
     }
 
     public async Task Remove(Guid id, CancellationToken cancellationToken)
     {
-        var std = await storage.GetById(id, cancellationToken);
-        await storage.Remove(std, cancellationToken);
+        var sw = Stopwatch.StartNew();
+        try
+        {
+            var std = await storage.GetById(id, cancellationToken);
+            await storage.Remove(std, cancellationToken);
+        }
+        finally
+        {
+            sw.Stop();
+            logger.LogInformation($"Remove выполнен за {sw.ElapsedMilliseconds} мс");
+        }
     }
 
     public async Task Update(Student student, CancellationToken cancellationToken)
     {
-        var std = await storage.GetById(student.Id, cancellationToken);
+        var sw = Stopwatch.StartNew();
+        try
+        {
+            var std = await storage.GetById(student.Id, cancellationToken);
 
-        std.BirthDate = student.BirthDate;
-        std.Gender = student.Gender;
-        std.FormEducation = student.FormEducation;
-        std.FullName = student.FullName;
-        std.InformaticsScore = student.InformaticsScore;
-        std.RussianScore = student.RussianScore;
-        std.MathScore = student.MathScore;
+            std.BirthDate = student.BirthDate;
+            std.Gender = student.Gender;
+            std.FormEducation = student.FormEducation;
+            std.FullName = student.FullName;
+            std.InformaticsScore = student.InformaticsScore;
+            std.RussianScore = student.RussianScore;
+            std.MathScore = student.MathScore;
 
-        await storage.Update(std, cancellationToken);
+            await storage.Update(std, cancellationToken);
+        }
+        finally
+        {
+            sw.Stop();
+            logger.LogInformation($"Update выполнен за {sw.ElapsedMilliseconds} мс");
+        }
     }
 
     public async Task<ICollection<Student>> GetAll(CancellationToken cancellationToken)
     {
-        return await storage.GetAll(cancellationToken);
+        var sw = Stopwatch.StartNew();
+        try
+        {
+            await Task.Delay(1000, cancellationToken);
+            return await storage.GetAll(cancellationToken);
+        }
+        finally
+        {
+            sw.Stop();
+            logger.LogInformation("GetAll выполнен за {SwElapsedMilliseconds} мс", sw.ElapsedMilliseconds);
+        }
     }
 
     public async Task<int> GetStudentsByMinScore(int count, CancellationToken cancellationToken)
     {
-        var stds = await storage.GetAll(cancellationToken);
-        return stds.Count(x => x.InformaticsScore + x.MathScore + x.RussianScore > count);
+        var sw = Stopwatch.StartNew();
+        try
+        {
+            var stds = await storage.GetAll(cancellationToken);
+            return stds.Count(x => x.InformaticsScore + x.MathScore + x.RussianScore > count);
+        }
+        finally
+        {
+            sw.Stop();
+            logger.LogInformation($"GetStudentsByMinScore выполнен за {sw.ElapsedMilliseconds} мс");
+        }
     }
 
     public async Task<int> GetCountStudents(CancellationToken cancellationToken)
     {
-        return await storage.GetCount(cancellationToken);
+        var sw = Stopwatch.StartNew();
+        try
+        {
+            return await storage.GetCount(cancellationToken);
+        }
+        finally
+        {
+            sw.Stop();
+            logger.LogInformation($"GetCountStudents выполнен за {sw.ElapsedMilliseconds} мс");
+        }
     }
 
 }

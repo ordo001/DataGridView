@@ -1,6 +1,7 @@
 using DataGridView.Entities;
 using DataGridView.Services.Contracts;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace DataGridView.Services.Tests;
@@ -16,7 +17,13 @@ public class StudentServiceTests
     public StudentServiceTests()
     {
         storageMock = new Mock<IStorage>();
-        studentService = new StudentService(storageMock.Object);
+        var mockLogger = new Mock<ILogger>(); 
+        var mockLoggerFactory = new Mock<ILoggerFactory>();
+        mockLoggerFactory
+            .Setup(f => f.CreateLogger(It.IsAny<string>()))
+            .Returns(mockLogger.Object);
+        
+        studentService = new StudentService(storageMock.Object, mockLoggerFactory.Object);
     }
     
     
