@@ -45,6 +45,7 @@ public class StudentServiceTests
         // Assert
         storageMock.Verify(x => 
             x.Add(student, It.IsAny<CancellationToken>()), Times.Once);
+        storageMock.VerifyNoOtherCalls();
     }
     
     /// <summary>
@@ -71,6 +72,7 @@ public class StudentServiceTests
             x.GetById(student.Id, CancellationToken.None), Times.Once);
         storageMock.Verify(x => 
             x.Remove(student, CancellationToken.None), Times.Once);
+        storageMock.VerifyNoOtherCalls();
     }
     
     /// <summary>
@@ -133,6 +135,7 @@ public class StudentServiceTests
         studentsFromService.Should().BeEquivalentTo(students);
         storageMock.Verify(x => 
             x.GetAll(CancellationToken.None), Times.Once);
+        storageMock.VerifyNoOtherCalls();
     }
     
     /// <summary>
@@ -163,6 +166,7 @@ public class StudentServiceTests
         studentsFromService.Should().Be(expectedCount);
         storageMock.Verify(x => 
             x.GetAll(CancellationToken.None), Times.Once);
+        storageMock.VerifyNoOtherCalls();
     }
     
     /// <summary>
@@ -190,5 +194,6 @@ public class StudentServiceTests
         studentsFromService.Should().Be(students.Count);
         storageMock.Verify(x => 
             x.GetCount(CancellationToken.None), Times.Once);
+        storageMock.VerifyNoOtherCalls();
     }
 }
