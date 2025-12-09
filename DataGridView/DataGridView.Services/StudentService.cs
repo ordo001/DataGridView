@@ -21,8 +21,6 @@ public class StudentService : IStudentService
     {
         this.storage = storage;
         logger = loggerFactory.CreateLogger(nameof(StudentService));
-        
-        
     }
 
     public async Task Add(Student student, CancellationToken cancellationToken)
@@ -84,7 +82,6 @@ public class StudentService : IStudentService
         var sw = Stopwatch.StartNew();
         try
         {
-            await Task.Delay(1000, cancellationToken);
             return await storage.GetAll(cancellationToken);
         }
         finally

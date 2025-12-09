@@ -21,6 +21,6 @@ public class StudentContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<Student>()
-            .HasIndex(x => x.Id);
+            .HasKey(x => x.Id);
     }
 }
