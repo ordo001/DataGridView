@@ -13,6 +13,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridView.Services", "Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridView.Services.Tests", "DataGridView.Services.Tests\DataGridView.Services.Tests.csproj", "{D4DA5575-6B13-4C58-9E4C-D4CD2AE6D8C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridView.Repositories.Contracts", "DataGridView.Repositories.Contracts\DataGridView.Repositories.Contracts.csproj", "{8A8AD35B-9526-45A9-82C2-2B7C009D854A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridView.Repositories", "DataGridView.Repositories\DataGridView.Repositories.csproj", "{AFFE2A18-6DB5-481B-BD15-E434C78B1BA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridView.Context", "DataGridView.Context\DataGridView.Context.csproj", "{D64B26EB-3B96-4DA5-A759-E24A3E48132F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +45,18 @@ Global
 		{D4DA5575-6B13-4C58-9E4C-D4CD2AE6D8C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4DA5575-6B13-4C58-9E4C-D4CD2AE6D8C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4DA5575-6B13-4C58-9E4C-D4CD2AE6D8C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A8AD35B-9526-45A9-82C2-2B7C009D854A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A8AD35B-9526-45A9-82C2-2B7C009D854A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A8AD35B-9526-45A9-82C2-2B7C009D854A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A8AD35B-9526-45A9-82C2-2B7C009D854A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFFE2A18-6DB5-481B-BD15-E434C78B1BA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFFE2A18-6DB5-481B-BD15-E434C78B1BA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFFE2A18-6DB5-481B-BD15-E434C78B1BA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFFE2A18-6DB5-481B-BD15-E434C78B1BA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D64B26EB-3B96-4DA5-A759-E24A3E48132F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D64B26EB-3B96-4DA5-A759-E24A3E48132F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D64B26EB-3B96-4DA5-A759-E24A3E48132F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D64B26EB-3B96-4DA5-A759-E24A3E48132F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using DataGridView.Entities;
+using DataGridView.Repositories.Contracts;
 using DataGridView.Services.Contracts;
 using Microsoft.Extensions.Logging;
 
@@ -20,6 +21,8 @@ public class StudentService : IStudentService
     {
         this.storage = storage;
         logger = loggerFactory.CreateLogger(nameof(StudentService));
+        
+        
     }
 
     public async Task Add(Student student, CancellationToken cancellationToken)
@@ -27,6 +30,7 @@ public class StudentService : IStudentService
         var sw = Stopwatch.StartNew();
         try
         {
+            student.BirthDate = student.BirthDate.ToUniversalTime();
             await storage.Add(student, cancellationToken);
         }
         finally
@@ -58,7 +62,7 @@ public class StudentService : IStudentService
         {
             var std = await storage.GetById(student.Id, cancellationToken);
 
-            std.BirthDate = student.BirthDate;
+            std.BirthDate = student.BirthDate.ToUniversalTime();
             std.Gender = student.Gender;
             std.FormEducation = student.FormEducation;
             std.FullName = student.FullName;

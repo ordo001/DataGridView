@@ -1,3 +1,5 @@
+using DataGridView.Context;
+using DataGridView.Repositories;
 using DataGridView.Services;
 using DataGridViewProject.Forms;
 using Microsoft.Extensions.Logging;
@@ -28,9 +30,8 @@ namespace DataGridViewProject
                 builder.AddSerilog(loggerConf);
             });
             
-            
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm(new StudentService(new InMemoryStorage(), loggerFactory)));
+            Application.Run(new MainForm(new StudentService(new StudentRepository(new StudentContext()), loggerFactory)));
         }
     }
 }

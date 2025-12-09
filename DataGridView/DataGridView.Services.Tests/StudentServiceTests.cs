@@ -1,4 +1,6 @@
 using DataGridView.Entities;
+using DataGridView.Repositories;
+using DataGridView.Repositories.Contracts;
 using DataGridView.Services.Contracts;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
