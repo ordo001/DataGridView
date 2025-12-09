@@ -8,7 +8,6 @@ namespace DataGridView.Repositories;
 /// <summary>
 /// Репозиторий для доступа к студентам
 /// </summary>
-//public class StudentRepository(StudentContext<IStudentEntityConfiguration> context) : IStorage
 public class StudentRepository(StudentContext context) : IStorage
 {
     public async Task Add(Student student, CancellationToken cancellationToken)
