@@ -31,7 +31,7 @@ namespace DataGridViewProject
             });
             
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm(new StudentService(new StudentRepository(new StudentContext()), loggerFactory)));
+            //Application.Run(new MainForm(new StudentService(new StudentRepository(new StudentContext()), loggerFactory)));
         }
     }
 }

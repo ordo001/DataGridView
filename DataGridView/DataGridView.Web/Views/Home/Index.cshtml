@@ -1,0 +1,35 @@
+﻿@model IEnumerable<DataGridView.Entities.Student>
+
+@{
+    ViewData["Title"] = "Список учеников";
+}
+
+<h1 class="mb-3">Список учеников</h1>
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>ФИО</th>
+        <th>Пол</th>
+        <th>Дата рождения</th>
+        <th>Форма обучения</th>
+        <th>Математика</th>
+        <th>Русский</th>
+        <th>Информатика</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var s in Model)
+    {
+        <tr>
+            <td>@s.FullName</td>
+            <td>@s.Gender</td>
+            <td>@s.BirthDate.ToString("dd.MM.yyyy")</td>
+            <td>@s.FormEducation</td>
+            <td>@s.MathScore</td>
+            <td>@s.RussianScore</td>
+            <td>@s.InformaticsScore</td>
+        </tr>
+    }
+    </tbody>
+</table>
