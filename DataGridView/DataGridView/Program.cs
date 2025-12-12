@@ -1,5 +1,9 @@
+using DataGridView.Context;
+using DataGridView.Repositories;
 using DataGridView.Services;
 using DataGridViewProject.Forms;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace DataGridViewProject
 {
@@ -11,8 +15,23 @@ namespace DataGridViewProject
         [STAThread]
         static void Main()
         {
+            var loggerConf = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Debug()
+                .WriteTo.File("logs/log-.txt",
+                    rollingInterval: RollingInterval.Day,
+                    outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}")
+                .WriteTo.Seq("http://localhost:5341",
+                    apiKey: "4MgpCqqUic7t4CKsyFYK")
+                .CreateLogger();
+
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddSerilog(loggerConf);
+            });
+            
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm(new StudentService(new InMemoryStorage())));
+            Application.Run(new MainForm(new StudentService(new StudentRepository(new StudentContext()), loggerFactory)));
         }
     }
 }

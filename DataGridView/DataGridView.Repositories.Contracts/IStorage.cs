@@ -1,6 +1,6 @@
 using DataGridView.Entities;
 
-namespace DataGridView.Services.Contracts;
+namespace DataGridView.Repositories.Contracts;
 
 /// <summary>
 /// Интерфейс хранилища
@@ -25,7 +25,7 @@ public interface IStorage
     /// <summary>
     /// Получить студента по идентификатору
     /// </summary>
-    public Task<Student> GetById(Guid id, CancellationToken cancellationToken);
+    public Task<Student?> GetById(Guid id, CancellationToken cancellationToken);
     
     /// <summary>
     /// Получить всех студентов
