@@ -28,6 +28,11 @@ public interface IStudentService
     public Task<ICollection<Student>> GetAll(CancellationToken cancellationToken);
     
     /// <summary>
+    /// Получить студента по идентификатору
+    /// </summary>
+    public Task<Student?> GetById(Guid id, CancellationToken cancellationToken);
+    
+    /// <summary>
     /// Получить всех студентов у которых общее кол-во баллов больше указанного
     /// </summary>
     public Task<int> GetStudentsByMinScore(int count, CancellationToken cancellationToken);

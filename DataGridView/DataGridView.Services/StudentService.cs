@@ -91,6 +91,11 @@ public class StudentService : IStudentService
         }
     }
 
+    public async Task<Student?> GetById(Guid id, CancellationToken cancellationToken)
+    {
+        return await storage.GetById(id, cancellationToken);
+    }
+
     public async Task<int> GetStudentsByMinScore(int count, CancellationToken cancellationToken)
     {
         var sw = Stopwatch.StartNew();
