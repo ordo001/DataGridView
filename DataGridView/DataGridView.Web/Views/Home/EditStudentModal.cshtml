@@ -2,7 +2,6 @@
 @model DataGridView.Entities.Student
 
 <form asp-action="Update" asp-controller="Home" method="post">
-    @Html.AntiForgeryToken()
     <input type="hidden" asp-for="Id"/>
 
     <div class="mb-2">

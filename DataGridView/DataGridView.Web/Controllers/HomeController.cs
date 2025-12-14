@@ -21,9 +21,18 @@ public class HomeController(IStudentService studentService) : Controller
     }
     
     /// <summary>
+    /// Получить станицу добавления студентов
+    /// </summary>
+    [HttpGet]
+    public IActionResult AddStudentPage()
+    {
+        return View();
+    }
+    
+    /// <summary>
     /// Удалить студента
     /// </summary>
-    [HttpDelete]
+    [HttpPost]
     public async Task<IActionResult> Delete(Guid studentId, CancellationToken cancellationToken)
     {
         await studentService.Remove(studentId, cancellationToken);
@@ -40,10 +49,24 @@ public class HomeController(IStudentService studentService) : Controller
         return PartialView("EditStudentModal", student);
     }
     
+    /// <summary>
+    /// Обновить студента
+    /// </summary>
     [HttpPost]
     public async Task<IActionResult> Update(Student student, CancellationToken cancellationToken)
     {
         await studentService.Update(student, cancellationToken);
         return RedirectToAction("Index", "Home");
+    }
+    
+    
+    /// <summary>
+    /// Добавить студента
+    /// </summary>
+    [HttpPost]
+    public async Task<IActionResult> Create(Student student, CancellationToken cancellationToken)
+    {
+        await studentService.Add(student, cancellationToken);
+        return RedirectToAction("Index");
     }
 }

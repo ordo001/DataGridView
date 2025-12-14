@@ -1,0 +1,66 @@
+@using DataGridView.Entities.Enums
+@model DataGridView.Entities.Student
+
+@{
+    ViewData["Title"] = "Добавить студента";
+}
+
+<h2 class="mb-3">Добавить студента</h2>
+
+<form asp-action="Create" method="post" class="w-50">
+
+    <div class="mb-2">
+        <label asp-for="FullName"></label>
+        <input asp-for="FullName" class="form-control"/>
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2">
+        <label asp-for="Gender"></label>
+        <select asp-for="Gender"
+                asp-items="Html.GetEnumSelectList<Gender>()"
+                class="form-select">
+        </select>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2">
+        <label asp-for="BirthDate"></label>
+        <input asp-for="BirthDate" type="date" class="form-control"/>
+        <span asp-validation-for="BirthDate" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2">
+        <label asp-for="FormEducation"></label>
+        <select asp-for="FormEducation"
+                asp-items="Html.GetEnumSelectList<FormEducation>()"
+                class="form-select">
+        </select>
+        <span asp-validation-for="FormEducation" class="text-danger"></span>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col">
+            <label asp-for="MathScore"></label>
+            <input asp-for="MathScore" class="form-control"/>
+            <span asp-validation-for="MathScore" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label asp-for="RussianScore"></label>
+            <input asp-for="RussianScore" class="form-control"/>
+            <span asp-validation-for="RussianScore" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label asp-for="InformaticsScore"></label>
+            <input asp-for="InformaticsScore" class="form-control"/>
+            <span asp-validation-for="InformaticsScore" class="text-danger"></span>
+        </div>
+    </div>
+
+    <button class="btn btn-success">Сохранить</button>
+    <a asp-action="Index" class="btn btn-secondary ms-2">Отмена</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}
