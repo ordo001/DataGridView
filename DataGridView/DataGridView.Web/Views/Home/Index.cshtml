@@ -1,0 +1,53 @@
+﻿@model MainModel
+
+@{
+    ViewData["Title"] = "Список учеников";
+}
+
+<h1 class="mb-3">Список студентов</h1>
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>ФИО</th>
+        <th>Пол</th>
+        <th>Дата рождения</th>
+        <th>Форма обучения</th>
+        <th>Математика</th>
+        <th>Русский</th>
+        <th>Информатика</th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var student in Model.Students)
+    {
+        <tr>
+            <td>@student.FullName</td>
+            <td>@student.Gender</td>
+            <td>@student.BirthDate.ToString("dd.MM.yyyy")</td>
+            <td>@student.FormEducation</td>
+            <td>@student.MathScore</td>
+            <td>@student.RussianScore</td>
+            <td>@student.InformaticsScore</td>
+            <td>
+                <div style="display: flex; gap: 10px;">
+                    <form asp-controller="Home" asp-action="Delete" asp-route-studentId="@student.Id" method="post">
+                        <button style="margin-right: 30px" class="btn btn-danger btn-sm">
+                            Удалить
+                        </button>
+                    </form>
+                    <a asp-controller="Home" asp-action="EditStudentPage" asp-route-studentId="@student.Id" method="get" class="btn btn-warning btn-sm">
+                        Изменить
+                    </a>
+                </div>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<h3 class="mb-3">Количество студентов: @Model.CountStudents</h3>
+<h3 class="mb-3">Количество студентов набравшие мин. кол-во очков: @Model.GetStudentsByMinScore</h3>
+
+

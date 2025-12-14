@@ -6,15 +6,15 @@ namespace DataGridView.Context;
 /// <summary>
 /// Контекст базы данных для студентов
 /// </summary>
-public class StudentContext : DbContext
+public class StudentContext(DbContextOptions<StudentContext> options) : DbContext(options)
 {
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
         {
             optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=StudentDb;Username=postgres;Password=postgres");
         }
-    }
+    }*/
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

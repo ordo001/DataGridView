@@ -12,7 +12,7 @@ namespace DataGridView.Entities
         /// <summary>
         /// Уникальный идентификатор
         /// </summary>
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Полное имя

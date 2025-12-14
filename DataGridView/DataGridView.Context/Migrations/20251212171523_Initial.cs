@@ -28,11 +28,6 @@ namespace DataGridView.Context.Migrations
                 {
                     table.PrimaryKey("PK_Student", x => x.Id);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Student_Id",
-                table: "Student",
-                column: "Id");
         }
 
         /// <inheritdoc />
