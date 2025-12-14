@@ -13,6 +13,9 @@ namespace DataGridView.Web.Extentions;
 /// </summary>
 public static class AddConfiguration
 {
+    /// <summary>
+    /// Сконфигурировать сервисы
+    /// </summary>
     public static IServiceCollection ConfigureServices(this IServiceCollection services, ConfigurationManager configuration)
     {
         var loggerConf = new LoggerConfiguration()
