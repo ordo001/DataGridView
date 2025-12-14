@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<DataGridView.Entities.Student>
 
-
 @{
     ViewData["Title"] = "Список учеников";
 }
@@ -33,51 +32,19 @@
             <td>@student.InformaticsScore</td>
             <td>
                 <div style="display: flex; gap: 10px;">
-                    <form asp-controller="Home" asp-action="Delete" asp-route-studentId="@student.Id" formmethod="post">
+                    <form asp-controller="Home" asp-action="Delete" asp-route-studentId="@student.Id" method="post">
                         <button style="margin-right: 30px" class="btn btn-danger btn-sm">
                             Удалить
                         </button>
                     </form>
-                    <button style="margin-right: 30px" class="btn btn-warning btn-sm"
-                            onclick="openEditModal('@student.Id')">
+                    <a asp-controller="Home" asp-action="EditStudentPage" asp-route-studentId="@student.Id" method="get" class="btn btn-warning btn-sm">
                         Изменить
-                    </button>
+                    </a>
                 </div>
             </td>
         </tr>
     }
     </tbody>
 </table>
-
-<div class="modal fade" id="editStudentModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h5 class="modal-title">Редактирование студента</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body" id="editStudentModalBody"></div>
-        </div>
-    </div>
-</div>
-
-
-<script>
-function openEditModal(id) {
-    fetch(`/Home/Edit?id=${id}`)
-        .then(res => res.text())
-        .then(html => {
-            document.getElementById('editStudentModalBody').innerHTML = html;
-
-            const modal = new bootstrap.Modal(
-                document.getElementById('editStudentModal')
-            );
-            modal.show();
-        });
-}
-</script>
-
-
 
 

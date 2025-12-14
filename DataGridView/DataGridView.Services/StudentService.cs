@@ -59,6 +59,10 @@ public class StudentService : IStudentService
         try
         {
             var std = await storage.GetById(student.Id, cancellationToken);
+            if (std is null)
+            {
+                return;
+            }
 
             std.BirthDate = student.BirthDate.ToUniversalTime();
             std.Gender = student.Gender;

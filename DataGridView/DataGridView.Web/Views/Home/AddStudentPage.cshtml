@@ -1,14 +1,23 @@
 @using DataGridView.Entities.Enums
-@model DataGridView.Entities.Student
+@using DataGridView.Web.Controllers
+@model DataGridView.Entities.Student?
 
 @{
     ViewData["Title"] = "Добавить студента";
+    var pageType = Model?.Id is null ? nameof(HomeController.Create) : nameof(HomeController.Update);
+}
+@if (Model?.Id is null)
+{
+    <h2 class="mb-3">Добавить студента</h2>
+}
+else
+{
+    <h2 class="mb-3">Обновить студента</h2>
 }
 
-<h2 class="mb-3">Добавить студента</h2>
-
-<form asp-action="Create" method="post" class="w-50">
-
+<form asp-action="@pageType" method="post" class="w-50">
+    <input asp-for="Id" class="form-control" hidden="hidden"/>
+    
     <div class="mb-2">
         <label asp-for="FullName"></label>
         <input asp-for="FullName" class="form-control"/>
@@ -42,17 +51,17 @@
     <div class="row mb-2">
         <div class="col">
             <label asp-for="MathScore"></label>
-            <input asp-for="MathScore" class="form-control"/>
+            <input asp-for="MathScore" type="number" class="form-control"/>
             <span asp-validation-for="MathScore" class="text-danger"></span>
         </div>
         <div class="col">
             <label asp-for="RussianScore"></label>
-            <input asp-for="RussianScore" class="form-control"/>
+            <input asp-for="RussianScore" type="number" class="form-control"/>
             <span asp-validation-for="RussianScore" class="text-danger"></span>
         </div>
         <div class="col">
             <label asp-for="InformaticsScore"></label>
-            <input asp-for="InformaticsScore" class="form-control"/>
+            <input asp-for="InformaticsScore" type="number" class="form-control"/>
             <span asp-validation-for="InformaticsScore" class="text-danger"></span>
         </div>
     </div>

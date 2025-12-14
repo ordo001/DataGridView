@@ -21,10 +21,24 @@ public class HomeController(IStudentService studentService) : Controller
     }
     
     /// <summary>
-    /// Получить станицу добавления студентов
+    /// Получить станицу обновления студентов 
     /// </summary>
     [HttpGet]
-    public IActionResult AddStudentPage()
+    public async Task<IActionResult> EditStudentPage(Guid studentId, CancellationToken cancellationToken)
+    {
+        var student = await studentService.GetById(studentId, cancellationToken);
+        if (student is null)
+        {
+            return NotFound();
+        }
+        return View(nameof(AddStudentPage),student);
+    }
+    
+    /// <summary>
+    /// Получить станицу добавления студентов 
+    /// </summary>
+    [HttpGet]
+    public IActionResult AddStudentPage(CancellationToken cancellationToken)
     {
         return View();
     }
@@ -42,21 +56,11 @@ public class HomeController(IStudentService studentService) : Controller
     /// <summary>
     /// Обновить студента
     /// </summary>
-    [HttpGet]
-    public async Task<IActionResult> Edit(Guid id, CancellationToken cancellationToken)
-    {
-        var student = await studentService.GetById(id, cancellationToken);
-        return PartialView("EditStudentModal", student);
-    }
-    
-    /// <summary>
-    /// Обновить студента
-    /// </summary>
     [HttpPost]
     public async Task<IActionResult> Update(Student student, CancellationToken cancellationToken)
     {
         await studentService.Update(student, cancellationToken);
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index");
     }
     
     
