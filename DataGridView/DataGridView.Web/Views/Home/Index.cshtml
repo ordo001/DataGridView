@@ -1,4 +1,5 @@
-﻿@model IEnumerable<DataGridView.Entities.Student>
+﻿@model MainModel
+
 
 @{
     ViewData["Title"] = "Список учеников";
@@ -20,7 +21,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var student in Model)
+    @foreach (var student in Model.Students)
     {
         <tr>
             <td>@student.FullName</td>
@@ -46,5 +47,8 @@
     }
     </tbody>
 </table>
+
+<h3 class="mb-3">Количество студентов: @Model.CountStudents</h3>
+<h3 class="mb-3">Количество студентов набравшие мин. кол-во очков: @Model.GetStudentsByMinScore</h3>
 
 

@@ -1,5 +1,6 @@
 using DataGridView.Entities;
 using DataGridView.Services.Contracts;
+using DataGridView.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DataGridView.Web.Controllers;
@@ -17,7 +18,14 @@ public class HomeController(IStudentService studentService) : Controller
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
         var students = await studentService.GetAll(cancellationToken);
-        return View(students);
+        var countStudents = await studentService.GetCountStudents(cancellationToken);
+        var countMinScore = await studentService.GetStudentsByMinScore(ServiceConstants.MinTotalScore, cancellationToken);
+        return View(new MainModel
+        {
+            Students = students,
+            CountStudents = countStudents,
+            GetStudentsByMinScore = countMinScore
+        });
     }
     
     /// <summary>
